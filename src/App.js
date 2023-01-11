@@ -1,23 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [item, setItem] = useState('')
+  const [lists, setLists] = useState(['lechuga', 'tomate', 'cafe'])
+
+  const handleItem = (e) => {
+    e.preventDefault()
+    setLists(oldValue => [...oldValue, item])
+    setItem('')
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Lista de la compra</h1>
+        <form onSubmit={(e) => handleItem(e)}>
+          <input type="text" name='item' value={item} onChange={(e) => setItem(e.target.value)} />
+          <button >añadir</button>
+        </form>
+        <ul>
+          {
+            lists.map((item) => {
+              return (<li key={item}>{item}</li>)
+            })
+          }
+        </ul>
       </header>
     </div>
   );
